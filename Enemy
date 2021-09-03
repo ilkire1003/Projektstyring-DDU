@@ -1,0 +1,34 @@
+PVector position;
+PVector movement;
+float rotation;
+
+void setup(){
+position = new PVector(0,0);
+movement = new PVector(3,3);
+
+
+
+  size(1000,1000);
+  rectMode(CENTER);
+  ellipseMode(CENTER);
+}
+
+void draw(){
+  background(0);
+  push();
+  translate(width/2,height/2);
+  fill(255,0,0);
+  rect(position.x,position.y,30,30);
+  fill(0);
+  ellipse(position.x-7,position.y-5,5,5);
+  ellipse(position.x+7,position.y-5,5,5);
+  line(position.x-12,position.y+8,position.x-9,position.y+3);
+  line(position.x-9,position.y+3,position.x-6,position.y+8);
+  line(position.x-6,position.y+8,position.x-3,position.y+3);
+  line(position.x-3,position.y+3,position.x,position.y+8);
+  line(position.x,position.y+8,position.x+3,position.y+3);
+  line(position.x+3,position.y+3,position.x+6,position.y+8);
+  line(position.x+6,position.y+8,position.x+9,position.y+3);
+  line(position.x+9,position.y+3,position.x+12,position.y+8);
+  pop();
+}
