@@ -1,26 +1,29 @@
 Enemy e;
-ArrayList <Enemy> enemy;
+ArrayList <Enemy> enemies;
 
 
 void setup(){
-   size(1000,1000);
+   size(1000,1000,P2D);
   rectMode(CENTER);
   ellipseMode(CENTER);
   e = new Enemy();
-  enemy = new ArrayList<Enemy>();
-  enemy.add(new Enemy());
+  enemies = new ArrayList<Enemy>();
+  //enemies.add(new Enemy());
   
 }
 void draw(){
-     for (int i = 0; i < enemy.size(); i++) {  
-    Enemy enemies = enemy.get(i);
-    enemies.display();
-    enemies.tracking();
+  background(0);
+     for (Enemy e : enemies) {  
+    e.display();
+    e.tracking();
      }
-  e.display();
-  e.tracking();
-
+ println(enemies.size());
 }
+void mousePressed() {
+  enemies.add(new Enemy());
+}
+
+
 
 class Enemy {
   
@@ -41,8 +44,6 @@ speed = new PVector(0,0);
  
 
 void display(){
-  background(0);
-  push();
   fill(255,0,0);
   rect(position.x,position.y,30,30);
   fill(0);
@@ -56,10 +57,9 @@ void display(){
   line(position.x+3,position.y+3,position.x+6,position.y+8);
   line(position.x+6,position.y+8,position.x+9,position.y+3);
   line(position.x+9,position.y+3,position.x+12,position.y+8);
-  pop();
   
   
-  topspeed = 10;
+  topspeed = 6;
   
 }
 void tracking(){
