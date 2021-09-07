@@ -1,19 +1,30 @@
 int Y = 1;
 int X = 2;
-color b1, b2, r1, r2;
+color b1, b2;
+
+int unit = 40;
+int count;
+Module[] mods;
 
 void setup() {
   
   //Farverne til baggrunden
   b1 = color(255, 51, 204);
   b2 = color(77, 255, 255);
-  //Farverne til rectangle
-  r1 = color(255, 0, 191);
-  
-  
+ 
   noStroke();
-  noLoop();
+  int wideCount = width/unit;
+  int highCount = height/unit;
+  count = wideCount * highCount;
+  mods = new Module[count];
+  
   fullScreen();
+  int index = 0;
+  for (int y = 0; y < highCount; y++) {
+    for (int x = 0; x < wideCount; x++) {
+      mods[index++] = new Module(x*unit, y*unit, unit/2, unit/2, random(0.05, 0.8), unit);
+    }
+  }
 }
 
 void draw() {
@@ -21,9 +32,10 @@ void draw() {
   gradientBack(0, 0, width, height, b2, b1, Y);
   gradientBack(0, 0, width, height, b1, b2, Y);
   
-  fill(r1);
-  
-  
+  for (Module mod : mods) {
+   mod.update();
+   mod.display();
+  }
 }
 
 //Gradient til baggrunden
@@ -47,5 +59,51 @@ void gradientBack(int x, int y, float w, float h, color b1, color b2, int axis) 
       line(i, y, i, y+h);
       
     }
+  }
+}
+
+//Klassen er kinda under konstruktion, så ikke tilføj den endnu
+class Module {
+  int xOffset;
+  int yOffset;
+  int xOffset2;
+  int yOffset2;
+  float x, y, x2, y2;
+  int unit;
+  int xDirection = 1;
+  int yDirection = 1;
+  float speed; 
+  
+  // Contructor
+  Module(int xOffsetTemp, int yOffsetTemp, int xTemp, int yTemp, float speedTemp, int tempUnit) {
+    xOffset = xOffsetTemp;
+    yOffset = yOffsetTemp;
+    xOffset2 = xOffsetTemp;
+    yOffset2 = yOffsetTemp;
+    x = xTemp;
+    y = yTemp;
+    speed = speedTemp;
+    unit = tempUnit;
+  }
+  
+  // Custom method for updating the variables
+  void update() {
+    x = x + (speed * xDirection);
+    if (x >= unit || x <= 0) {
+      xDirection *= -1;
+      x = x + (1 * xDirection);
+      y = y + (1 * yDirection);
+    }
+    if (y >= unit || y <= 0) {
+      yDirection *= -1;
+      y = y + (1 * yDirection);
+    }
+  }
+  
+  // Custom method for drawing the object
+  void display() {
+    fill(100);
+    noStroke();
+    ellipse(xOffset + x, yOffset + y, 5, 5);
   }
 }
